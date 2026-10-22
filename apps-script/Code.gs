@@ -511,7 +511,7 @@ function betulkanJadual_(ss, rasmi) {
   var tercantum = hurai_Tarikh_(bersih_(hdr[0]).replace(/^tarikh\s*/i, ''));
   if (tercantum) {
     var barisPisah = hdr.map(function (v, idx) {
-      return bersih_(v).replace(new RegExp('^' + JADUAL_HEADER[idx].replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*', 'i'), '');
+      return bersih_(v).replace(new RegExp('^' + JADUAL_HEADER[idx].replace(/[.*+?^$(){}|[\]\\]/g, '\\$&') + '\\s*', 'i'), '');
     });
     dataAsal.unshift(barisPisah);
   }
