@@ -145,6 +145,13 @@ function hariBagi_(t) {
   return t ? HARI[new Date(t.y, t.m, t.d).getDay()] : '';
 }
 
+/** Nilai masa dari Sheet (Date bertarikh 1899) -> "4:00 PM". */
+function formatMasa_(d) {
+  var h = d.getHours();
+  var m = d.getMinutes();
+  return (h % 12 || 12) + ':' + ('0' + m).slice(-2) + ' ' + (h >= 12 ? 'PM' : 'AM');
+}
+
 /**
  * Seragamkan nama UDM dalam Jadual Operasi ke nama rasmi dalam tab DUN.
  * Pulang {nama, ragu, nota}. ragu=true bila tidak dapat dipastikan.
@@ -322,7 +329,10 @@ function normalJadual_(rows, senaraiRasmi) {
     var t = hurai_Tarikh_(r[JC.tarikh]);
     if (t) { tarikhLepas = t; hariLepas = ''; }
     else if (!bersih_(r[JC.tarikh])) t = tarikhLepas;
-    var baris = r.map(function (v) { return ialahTarikh_(v) ? v : (v === null || v === undefined ? '' : v); });
+    var baris = r.map(function (v, i) {
+      if (ialahTarikh_(v)) return i === JC.tarikh ? v : formatMasa_(v);
+      return v === null || v === undefined ? '' : v;
+    });
     if (t) {
       baris[JC.tarikh] = formatTarikh_(t);
       baris[JC.hari] = hariBagi_(t);
@@ -839,7 +849,7 @@ function doPost(e) {
 if (typeof module !== 'undefined') {
   module.exports = {
     pecahCawangan_: pecahCawangan_, namaUdm_: namaUdm_, hurai_Tarikh_: hurai_Tarikh_, formatTarikh_: formatTarikh_,
-    hariBagi_: hariBagi_, seragamUdm_: seragamUdm_, kategoriDariJadual_: kategoriDariJadual_, nomborCula_: nomborCula_,
+    hariBagi_: hariBagi_, formatMasa_: formatMasa_, seragamUdm_: seragamUdm_, kategoriDariJadual_: kategoriDariJadual_, nomborCula_: nomborCula_,
     huraiBarisDunAsal_: huraiBarisDunAsal_, binaBarisDun_: binaBarisDun_, bacaBarisDun_: bacaBarisDun_,
     normalJadual_: normalJadual_, rekodDariJadual_: rekodDariJadual_, JC: JC, DUN_COL: DUN_COL
   };

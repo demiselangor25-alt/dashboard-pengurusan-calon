@@ -135,6 +135,12 @@ uji('susun semula tab DUN dan baca balik', () => {
   assert.strictEqual(G.huraiBarisDunAsal_(['', '', '', ''], 'N15'), null);
 });
 
+uji('masa dari nilai Date Sheet', () => {
+  const r = G.normalJadual_([['27 Ogos 2026', 'Khamis', new Date(1899, 11, 30, 16, 0), 'Bukit Idaman', '', 'X', 'Ziarah', 'P', '', '', '', '', '', '', '']], RASMI);
+  assert.strictEqual(r.rows[0][G.JC.masa], '4:00 PM');
+  assert.strictEqual(G.formatMasa_(new Date(2026, 0, 1, 9, 5)), '9:05 AM');
+});
+
 uji('peratus cula', () => {
   assert.strictEqual(G.nomborCula_(0.5), 50);
   assert.strictEqual(G.nomborCula_(75), 75);
