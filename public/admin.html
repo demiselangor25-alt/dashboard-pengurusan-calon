@@ -20,7 +20,7 @@
         <div class="lencana" style="background:var(--utama)">ADM</div>
         <div>
           <div style="font-size:16px;font-weight:700">Panel Admin</div>
-          <div class="subtajuk">Setiap perubahan ditulis terus ke Google Sheet</div>
+          <div class="subtajuk">Setiap perubahan disimpan terus ke pangkalan data</div>
         </div>
       </div>
       <div class="alat">
@@ -46,12 +46,12 @@
     <!-- Tambah rekod -->
     <section class="panel pad" data-panel="rekod">
       <form class="borang" id="borang-rekod">
-        <div class="blok"><h2>Tambah rekod lapangan</h2><div class="kecil">Disimpan sebagai baris baharu dalam tab “Rekod Lapangan”.</div></div>
+        <div class="blok"><h2>Tambah rekod lapangan</h2><div class="kecil">Disimpan sebagai rekod baharu dalam pangkalan data.</div></div>
         <div class="penapis" role="radiogroup" aria-label="Kategori" id="kategori"></div>
         <div class="grid-borang">
           <label class="medan">DUN<select name="dun" id="rekod-dun"><option value="N15">N.15 Taman Templer</option><option value="N13">N.13 Kuang</option></select></label>
           <label class="medan">UDM<select name="udm" id="rekod-udm" required></select></label>
-          <label class="medan">Cawangan<select name="cawangan" id="rekod-caw"></select></label>
+          <label class="medan">Lokaliti<select name="cawangan" id="rekod-caw"></select></label>
           <label class="medan">Tarikh<input type="date" name="tarikh" id="rekod-tarikh" required></label>
         </div>
         <div class="grid-borang">
@@ -59,14 +59,14 @@
           <label class="medan">PIC<input type="text" name="pic" maxlength="120"></label>
         </div>
         <label class="medan">Catatan / maklum balas<textarea name="catatan" rows="3" maxlength="2000"></textarea></label>
-        <div class="kanan"><button type="submit" class="btn">Simpan ke Google Sheet</button></div>
+        <div class="kanan"><button type="submit" class="btn">Simpan</button></div>
       </form>
     </section>
 
     <!-- Kemas kini UDM -->
     <section class="panel pad tersembunyi" data-panel="udm">
       <form class="borang" id="borang-udm">
-        <div class="blok"><h2>Kemas kini UDM</h2><div class="kecil">PIC, keutamaan, status, catatan dan peratus cula. Ditulis ke tab DUN.</div></div>
+        <div class="blok"><h2>Kemas kini UDM</h2><div class="kecil">PIC, keutamaan, status, catatan dan peratus cula. Disimpan terus ke pangkalan data.</div></div>
         <div class="grid-borang">
           <label class="medan">DUN<select name="dun" id="udm-dun"><option value="N15">N.15 Taman Templer</option><option value="N13">N.13 Kuang</option></select></label>
           <label class="medan">UDM<select name="udm" id="udm-udm" required></select></label>
@@ -78,7 +78,7 @@
           <label class="medan">Peratus selesai cula (%)<input type="number" name="cula" min="0" max="100" step="1"></label>
         </div>
         <label class="medan">Catatan isu &amp; susulan<textarea name="catatan" rows="3" maxlength="2000"></textarea></label>
-        <div class="kanan"><button type="submit" class="btn">Simpan ke Google Sheet</button></div>
+        <div class="kanan"><button type="submit" class="btn">Simpan</button></div>
       </form>
     </section>
 
@@ -91,7 +91,7 @@
     <!-- Tetapan -->
     <section class="panel pad tersembunyi" data-panel="tetapan">
       <form class="borang" id="borang-tetapan">
-        <div class="blok"><h2>Tetapan laman</h2><div class="kecil">Disimpan dalam tab “Tetapan” di Google Sheet.</div></div>
+        <div class="blok"><h2>Tetapan laman</h2><div class="kecil">Disimpan dalam pangkalan data.</div></div>
         <label class="medan">Tajuk laman<input type="text" name="tajuk" maxlength="120"></label>
         <div class="grid-borang">
           <label class="medan">Subtajuk N.15<input type="text" name="subtajuk_N15" maxlength="200"></label>

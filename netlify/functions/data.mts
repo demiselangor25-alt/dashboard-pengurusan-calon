@@ -12,7 +12,7 @@ export default async (req: Request, context: Context) => {
     return jsonRes({ ok: true, data, dikemaskini: new Date().toISOString() })
   } catch (err) {
     console.error(err)
-    return jsonRes({ ok: false, error: (err as Error).message || "Gagal membaca Google Sheet." }, 502)
+    return jsonRes({ ok: false, error: (err as Error).message || "Gagal membaca pangkalan data." }, 502)
   }
 }
 

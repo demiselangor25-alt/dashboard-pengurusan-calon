@@ -1,4 +1,4 @@
-import { ambilData, esc, IKON, KATEGORI, nilaiTarikh, tajukKes, terapTetapan } from './umum.js';
+import { ambilData, esc, IKON, KATEGORI, nilaiTarikh, tahap, tajukKes, terapTetapan } from './umum.js';
 
 const $ = (id) => document.getElementById(id);
 const q = new URLSearchParams(location.search);
@@ -10,9 +10,9 @@ let REKOD = [];
 let DATA = null;
 
 const KOLUM = {
-  Ziarah: [['tarikh', 'Tarikh'], ['cawangan', 'Cawangan'], ['nama', 'Ziarah'], ['pic', 'PIC'], ['catatan', 'Catatan']],
-  'Al Malak': [['nama', 'Nama'], ['cawangan', 'Cawangan'], ['tarikh', 'Tarikh dijumpai'], ['pic', 'PIC'], ['catatan', 'Catatan / maklum balas']],
-  Komuniti: [['tarikh', 'Tarikh'], ['nama', 'Komuniti / program'], ['cawangan', 'Cawangan'], ['pic', 'PIC'], ['catatan', 'Catatan']],
+  Ziarah: [['tarikh', 'Tarikh'], ['cawangan', 'Lokaliti'], ['nama', 'Ziarah'], ['pic', 'PIC'], ['catatan', 'Catatan']],
+  'Al Malak': [['nama', 'Nama'], ['cawangan', 'Lokaliti'], ['tarikh', 'Tarikh dijumpai'], ['pic', 'PIC'], ['catatan', 'Catatan / maklum balas']],
+  Komuniti: [['tarikh', 'Tarikh'], ['nama', 'Komuniti / program'], ['cawangan', 'Lokaliti'], ['pic', 'PIC'], ['catatan', 'Catatan']],
 };
 const TAJUK = { Ziarah: 'Semua ziarah di UDM ini', 'Al Malak': 'Al Malak yang telah dijumpai', Komuniti: 'Komuniti yang telah di-engage' };
 
@@ -64,19 +64,19 @@ function lukis() {
         <span class="bil bil-besar">${esc(U.bil)}</span>
         <div style="display:flex;flex-direction:column;gap:4px">
           <h1>${esc(tajukKes(U.udm))}</h1>
-          <div class="kecil" style="font-size:14px">${U.cawangan.length} cawangan${U.profil ? ' · ' + esc(U.profil) : ''} · PIC: ${U.pic ? esc(U.pic) : '<span class="merah-teks">belum diisi</span>'}</div>
+          <div class="kecil" style="font-size:14px">${U.cawangan.length} Lokaliti${U.profil ? ' · ' + esc(U.profil) : ''} · PIC: ${U.pic ? esc(U.pic) : '<span class="merah-teks">belum diisi</span>'}</div>
         </div>
       </div>
       ${U.keutamaan ? `<span class="pil ${['tinggi', 'sederhana', 'rendah'].includes(kt) ? kt : 'kelabu'}" style="font-size:13px;padding:6px 12px">Keutamaan ${esc(U.keutamaan)}</span>` : ''}
     </div>
     <div class="tab-metrik" role="tablist" aria-label="Kategori rekod">
-      ${KATEGORI.map((k) => `<button type="button" role="tab" class="metrik ${k.kelas}" data-tab="${k.id}" aria-selected="${tab === k.id}"><b>${kira[k.id]}</b><span>${k.label}</span></button>`).join('')}
+      ${KATEGORI.map((k) => `<button type="button" role="tab" class="metrik ${tahap(kira[k.id])}" data-tab="${k.id}" aria-selected="${tab === k.id}"><b>${kira[k.id]}</b><span>${k.label}</span></button>`).join('')}
     </div>
   </section>
 
   <section class="panel" role="tabpanel">
     <div class="pad seksyen-kepala">
-      <div><h2 style="font-size:18px">${TAJUK[tab]}</h2><div class="kecil">${rekodTab.length} rekod · dari tab Rekod Lapangan</div></div>
+      <div><h2 style="font-size:18px">${TAJUK[tab]}</h2><div class="kecil">${rekodTab.length} rekod</div></div>
       <a class="btn kecil" style="display:inline-flex;align-items:center;text-decoration:none;color:#fff" href="/admin?dun=${DUN}&bil=${encodeURIComponent(U.bil)}&kategori=${encodeURIComponent(tab)}">+ Tambah ${esc(tab)}</a>
     </div>
     ${rekodTab.length ? `<div class="kotak-jadual"><table>
@@ -87,7 +87,7 @@ function lukis() {
 
   <div class="dua-lajur">
     <section class="panel pad lebar" style="display:flex;flex-direction:column;gap:14px">
-      <div class="seksyen-kepala"><div><h2 style="font-size:18px">${U.cawangan.length} cawangan dalam UDM ini</h2></div><span class="kecil">Hijau = ada rekod lapangan</span></div>
+      <div class="seksyen-kepala"><div><h2 style="font-size:18px">${U.cawangan.length} Lokaliti dalam UDM ini</h2></div><span class="kecil">Hijau = ada rekod lapangan</span></div>
       <div class="grid-cawangan">${U.cawangan.map((c) => `<div class="cawangan ${cawAda(c) ? 'ada' : ''}">${esc(c.kod ? c.kod + ' · ' : '')}${esc(c.nama)}</div>`).join('')}</div>
     </section>
     <aside class="sempit">

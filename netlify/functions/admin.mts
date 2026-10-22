@@ -21,7 +21,7 @@ export default async (req: Request, context: Context) => {
     return jsonRes({ ok: true, data })
   } catch (err) {
     console.error(err)
-    return jsonRes({ ok: false, error: (err as Error).message || "Gagal menulis ke Google Sheet." }, 502)
+    return jsonRes({ ok: false, error: (err as Error).message || "Gagal menyimpan ke pangkalan data." }, 502)
   }
 }
 

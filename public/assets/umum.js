@@ -8,6 +8,14 @@ export const KATEGORI = [
   { id: 'Komuniti', kelas: 'komuniti', label: 'Komuniti' },
 ];
 
+/** Warna petak bilangan: 0–5 merah, 6–9 biru, 10 ke atas hijau. */
+export function tahap(n) {
+  const x = Number(n) || 0;
+  if (x >= 10) return 'tahap-hijau';
+  if (x >= 6) return 'tahap-biru';
+  return 'tahap-merah';
+}
+
 export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }

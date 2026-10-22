@@ -21,7 +21,7 @@ async function hantar(action, payload, butang) {
   butang.textContent = 'Menyimpan…';
   try {
     await api('/api/admin', { method: 'POST', body: JSON.stringify({ action, ...payload }) });
-    toast('Disimpan ke Google Sheet.');
+    toast('Berjaya disimpan.');
     return true;
   } catch (err) {
     toast(err.message, true);
@@ -64,7 +64,7 @@ async function segarRekodUdm(pilihBil) {
 function isiCawangan() {
   const d = cache[$('rekod-dun').value];
   const u = d && d.udm.find((x) => x.udm === $('rekod-udm').value);
-  $('rekod-caw').innerHTML = '<option value="">— Umum / tidak spesifik —</option>' +
+  $('rekod-caw').innerHTML = '<option value="">— Umum / tiada lokaliti khusus —</option>' +
     (u ? u.cawangan.map((c, i) => `<option value="${i}">${esc(c.kod ? c.kod + ' · ' : '')}${esc(c.nama)}</option>`).join('') : '');
 }
 

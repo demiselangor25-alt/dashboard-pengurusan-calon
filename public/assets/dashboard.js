@@ -1,4 +1,4 @@
-import { ambilData, esc, IKON, kiraIkutUdm, logKeluar, nilaiTarikh, tajukKes, terapTetapan, toast } from './umum.js';
+import { ambilData, esc, IKON, kiraIkutUdm, logKeluar, nilaiTarikh, tahap, tajukKes, terapTetapan, toast } from './umum.js';
 
 const DUN = location.pathname.replace(/\/+$/, '') === '/kuang' ? 'N13' : 'N15';
 const $ = (id) => document.getElementById(id);
@@ -15,7 +15,7 @@ async function muat(segar = false) {
     $('ralat').classList.add('tersembunyi');
     DATA = await ambilData(DUN, segar);
     lukis();
-    if (segar) toast('Data dikemas kini dari Google Sheet.');
+    if (segar) toast('Data dikemas kini.');
   } catch (err) {
     $('ralat').innerHTML = IKON.amaran + '<div>' + esc(err.message) + '</div>';
     $('ralat').classList.remove('tersembunyi');
@@ -45,7 +45,7 @@ function lukis() {
   lukisPenapis(peta);
   lukisKad(peta);
   lukisJadual();
-  $('kaki').textContent = `Sumber: Google Sheet “DATABASE PENGURUSAN CALON” · dikemas kini ${new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' })}`;
+  $('kaki').textContent = `Sumber: Pangkalan Data Pilihanraya PAS Selayang · dikemas kini ${new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' })}`;
 }
 
 function jumlah(peta, kat) {
@@ -62,7 +62,7 @@ function lukisKpi(peta) {
   const kotak = (label, nilai, sub, kelas = '', kelasNilai = '') =>
     `<div class="panel"><div class="kpi-label ${kelas}">${label}</div><div class="kpi-nilai ${kelasNilai}">${nilai}</div><div class="kecil">${sub}</div></div>`;
   $('kpi').innerHTML =
-    kotak('UDM', DATA.udm.length, `${caw} cawangan`) +
+    kotak('UDM', DATA.udm.length, `${caw} Lokaliti`) +
     kotak('Ziarah', z.n, z.n ? `di ${z.udm} UDM` : 'Belum ada rekod', 'ziarah') +
     kotak('Al Malak', a.n, a.n ? `di ${a.udm} UDM` : 'Belum ada rekod', 'malak') +
     kotak('Komuniti', k.n, k.n ? `di ${k.udm} UDM` : 'Belum ada rekod', 'komuniti') +
@@ -76,7 +76,7 @@ function lukisTakPadan(senarai) {
   el.className = 'notis kuning';
   el.innerHTML = IKON.amaran + `<div><strong>${senarai.length} rekod belum dipadankan dengan UDM</strong> dan tidak dikira dalam kad di bawah: ` +
     senarai.slice(0, 5).map((r) => esc(`${r.nama} (${r.udm || 'tiada UDM'})`)).join('; ') +
-    (senarai.length > 5 ? '…' : '') + '. Betulkan nama UDM dalam tab Rekod Lapangan.</div>';
+    (senarai.length > 5 ? '…' : '') + '. Betulkan nama UDM rekod ini di pangkalan data.</div>';
 }
 
 function belumDisentuh(k) { return !k.Ziarah && !k['Al Malak'] && !k.Komuniti; }
@@ -107,13 +107,13 @@ function lukisKad(peta) {
     const pil = kt ? `<span class="pil ${['tinggi', 'sederhana', 'rendah'].includes(kt) ? kt : 'kelabu'}">${esc(u.keutamaan)}</span>` : '';
     return `<a class="kad-udm" href="/udm?dun=${DUN}&bil=${encodeURIComponent(u.bil)}">
       <div class="kad-atas">
-        <div class="kad-nama"><span class="bil">${esc(u.bil)}</span><div><strong>${esc(namaPapar(u.udm))}</strong><span class="kecil">${u.cawangan.length} cawangan</span></div></div>
+        <div class="kad-nama"><span class="bil">${esc(u.bil)}</span><div><strong>${esc(namaPapar(u.udm))}</strong><span class="kecil">${u.cawangan.length} Lokaliti</span></div></div>
         ${pil}
       </div>
       <div class="tiga">
-        <div class="metrik ziarah"><b>${k.Ziarah}</b><span>Ziarah</span></div>
-        <div class="metrik malak"><b>${k['Al Malak']}</b><span>Al Malak</span></div>
-        <div class="metrik komuniti"><b>${k.Komuniti}</b><span>Komuniti</span></div>
+        <div class="metrik ${tahap(k.Ziarah)}"><b>${k.Ziarah}</b><span>Ziarah</span></div>
+        <div class="metrik ${tahap(k['Al Malak'])}"><b>${k['Al Malak']}</b><span>Al Malak</span></div>
+        <div class="metrik ${tahap(k.Komuniti)}"><b>${k.Komuniti}</b><span>Komuniti</span></div>
       </div>
       <div class="kad-bawah">
         <span>PIC: ${u.pic ? `<strong>${esc(u.pic)}</strong>` : '<span class="merah-teks">Belum diisi</span>'}</span>

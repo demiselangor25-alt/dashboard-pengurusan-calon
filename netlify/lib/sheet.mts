@@ -26,9 +26,9 @@ export async function panggilSheet(action: string, payload: Record<string, unkno
   try {
     json = JSON.parse(teks)
   } catch {
-    throw new Error(`Google Sheet tidak memberi respons yang sah (HTTP ${res.status}).`)
+    throw new Error(`Pangkalan data tidak memberi respons yang sah (HTTP ${res.status}).`)
   }
-  if (!json.ok) throw new Error(json.error || "Ralat dari Google Sheet.")
+  if (!json.ok) throw new Error(json.error || "Ralat dari pangkalan data.")
   return json.data
 }
 

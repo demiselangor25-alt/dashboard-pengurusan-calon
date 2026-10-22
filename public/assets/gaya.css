@@ -108,6 +108,9 @@ h3 { margin: 0; font-size: 16px; font-weight: 800; }
 .metrik.ziarah { background: var(--ziarah-bg); color: var(--ziarah); }
 .metrik.malak { background: var(--malak-bg); color: var(--malak); }
 .metrik.komuniti { background: var(--komuniti-bg); color: var(--komuniti); }
+.metrik.tahap-merah { background: #FDE8E7; color: #9B1C1C; }
+.metrik.tahap-biru { background: #E3EDFB; color: #173D6E; }
+.metrik.tahap-hijau { background: #E3F3EA; color: #0E4F31; }
 .kad-bawah { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--kelabu); border-top: 1px solid var(--garis-2); padding-top: 10px; }
 .kad-bawah strong { color: var(--dakwat); }
 .merah-teks { color: #B42318; font-weight: 700; }
