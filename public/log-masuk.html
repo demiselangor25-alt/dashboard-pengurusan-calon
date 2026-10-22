@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Log masuk · Dashboard Pengurusan Calon</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/gaya.css">
+<script type="module" src="/assets/log-masuk.js"></script>
+</head>
+<body>
+<div class="log-masuk">
+  <form id="borang" novalidate>
+    <div class="atas">
+      <div class="ikon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></div>
+      <h1>Dashboard Pengurusan Calon</h1>
+      <div class="kecil" style="font-size:14px">N.15 Taman Templer &amp; N.13 Kuang · Untuk petugas sahaja</div>
+    </div>
+    <label class="medan">Kata laluan
+      <input type="password" id="kata-laluan" autocomplete="current-password" required autofocus>
+    </label>
+    <div class="ralat" id="ralat" role="alert"></div>
+    <button type="submit" class="btn" style="height:48px;font-size:15px">Masuk</button>
+    <div class="kecil" style="text-align:center">Kata laluan yang sama digunakan untuk /admin</div>
+  </form>
+</div>
+</body>
+</html>

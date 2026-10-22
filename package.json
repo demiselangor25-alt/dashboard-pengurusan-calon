@@ -1,0 +1,13 @@
+{
+  "name": "dashboard-pengurusan-calon",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Dashboard progress pengurusan calon (N.15 Taman Templer & N.13 Kuang) dengan data dari Google Sheet.",
+  "scripts": {
+    "test": "node apps-script/test/ujian.cjs && node test/ujian-web.mjs"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^5.0.0"
+  }
+}

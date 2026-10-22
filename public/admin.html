@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel Admin · Dashboard Pengurusan Calon</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/gaya.css">
+<script type="module" src="/assets/admin.js"></script>
+</head>
+<body>
+<header class="header gelap">
+  <div class="header-dalam padat">
+    <div class="header-baris">
+      <div class="jenama">
+        <div class="lencana" style="background:var(--utama)">ADM</div>
+        <div>
+          <div style="font-size:16px;font-weight:700">Panel Admin</div>
+          <div class="subtajuk">Setiap perubahan ditulis terus ke Google Sheet</div>
+        </div>
+      </div>
+      <div class="alat">
+        <a class="btn-hantu" href="/">Dashboard N.15</a>
+        <a class="btn-hantu" href="/kuang">Dashboard N.13</a>
+        <button type="button" class="btn-hantu" id="log-keluar">Log keluar</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="admin-susun">
+  <nav class="admin-menu" role="tablist" aria-label="Menu admin" id="menu">
+    <button type="button" role="tab" data-seksyen="rekod" aria-selected="true">Tambah rekod lapangan</button>
+    <button type="button" role="tab" data-seksyen="udm" aria-selected="false">Kemas kini UDM</button>
+    <button type="button" role="tab" data-seksyen="jadual" aria-selected="false">Status Jadual Operasi</button>
+    <button type="button" role="tab" data-seksyen="tetapan" aria-selected="false">Tetapan laman</button>
+  </nav>
+
+  <main class="admin-isi">
+    <div id="ralat" class="notis merah tersembunyi" role="alert"></div>
+
+    <!-- Tambah rekod -->
+    <section class="panel pad" data-panel="rekod">
+      <form class="borang" id="borang-rekod">
+        <div class="blok"><h2>Tambah rekod lapangan</h2><div class="kecil">Disimpan sebagai baris baharu dalam tab “Rekod Lapangan”.</div></div>
+        <div class="penapis" role="radiogroup" aria-label="Kategori" id="kategori"></div>
+        <div class="grid-borang">
+          <label class="medan">DUN<select name="dun" id="rekod-dun"><option value="N15">N.15 Taman Templer</option><option value="N13">N.13 Kuang</option></select></label>
+          <label class="medan">UDM<select name="udm" id="rekod-udm" required></select></label>
+          <label class="medan">Cawangan<select name="cawangan" id="rekod-caw"></select></label>
+          <label class="medan">Tarikh<input type="date" name="tarikh" id="rekod-tarikh" required></label>
+        </div>
+        <div class="grid-borang">
+          <label class="medan"><span id="label-nama">Nama Al Malak</span><input type="text" name="nama" id="rekod-nama" maxlength="300" required></label>
+          <label class="medan">PIC<input type="text" name="pic" maxlength="120"></label>
+        </div>
+        <label class="medan">Catatan / maklum balas<textarea name="catatan" rows="3" maxlength="2000"></textarea></label>
+        <div class="kanan"><button type="submit" class="btn">Simpan ke Google Sheet</button></div>
+      </form>
+    </section>
+
+    <!-- Kemas kini UDM -->
+    <section class="panel pad tersembunyi" data-panel="udm">
+      <form class="borang" id="borang-udm">
+        <div class="blok"><h2>Kemas kini UDM</h2><div class="kecil">PIC, keutamaan, status, catatan dan peratus cula. Ditulis ke tab DUN.</div></div>
+        <div class="grid-borang">
+          <label class="medan">DUN<select name="dun" id="udm-dun"><option value="N15">N.15 Taman Templer</option><option value="N13">N.13 Kuang</option></select></label>
+          <label class="medan">UDM<select name="udm" id="udm-udm" required></select></label>
+        </div>
+        <div class="grid-borang">
+          <label class="medan">PIC<input type="text" name="pic" maxlength="120"></label>
+          <label class="medan">Keutamaan<select name="keutamaan"><option value="">— Kosong —</option><option>Tinggi</option><option>Sederhana</option><option>Rendah</option></select></label>
+          <label class="medan">Status<select name="status"><option value="">— Kosong —</option><option>Belum Mula</option><option>Dalam Proses</option><option>Selesai</option></select></label>
+          <label class="medan">Peratus selesai cula (%)<input type="number" name="cula" min="0" max="100" step="1"></label>
+        </div>
+        <label class="medan">Catatan isu &amp; susulan<textarea name="catatan" rows="3" maxlength="2000"></textarea></label>
+        <div class="kanan"><button type="submit" class="btn">Simpan ke Google Sheet</button></div>
+      </form>
+    </section>
+
+    <!-- Jadual Operasi -->
+    <section class="panel tersembunyi" data-panel="jadual">
+      <div class="pad blok"><h2>Status Jadual Operasi</h2><div class="kecil">Status yang kosong ditanda merah. Pilih status dan tekan Simpan pada baris itu.</div></div>
+      <div class="kotak-jadual"><table id="tbl-jadual"></table></div>
+    </section>
+
+    <!-- Tetapan -->
+    <section class="panel pad tersembunyi" data-panel="tetapan">
+      <form class="borang" id="borang-tetapan">
+        <div class="blok"><h2>Tetapan laman</h2><div class="kecil">Disimpan dalam tab “Tetapan” di Google Sheet.</div></div>
+        <label class="medan">Tajuk laman<input type="text" name="tajuk" maxlength="120"></label>
+        <div class="grid-borang">
+          <label class="medan">Subtajuk N.15<input type="text" name="subtajuk_N15" maxlength="200"></label>
+          <label class="medan">Subtajuk N.13<input type="text" name="subtajuk_N13" maxlength="200"></label>
+        </div>
+        <label class="medan">Pengumuman<textarea name="pengumuman" rows="3" maxlength="1000"></textarea></label>
+        <label class="semak"><input type="checkbox" name="pengumuman_aktif">Paparkan pengumuman di dashboard</label>
+        <label class="medan">Warna utama<input type="color" name="warna"></label>
+        <div class="kanan"><button type="submit" class="btn">Simpan tetapan</button></div>
+      </form>
+    </section>
+  </main>
+</div>
+</body>
+</html>

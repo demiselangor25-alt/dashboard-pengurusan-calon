@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Butiran UDM</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/gaya.css">
+<script type="module" src="/assets/udm.js"></script>
+</head>
+<body>
+<header class="header">
+  <div class="header-dalam padat">
+    <div class="header-baris">
+      <div class="jenama">
+        <div class="lencana" id="lencana">N15</div>
+        <div>
+          <div style="font-size:16px;font-weight:700" id="tajuk">Dashboard Pengurusan Calon</div>
+          <div class="subtajuk" id="subtajuk"></div>
+        </div>
+      </div>
+      <div class="alat">
+        <a class="btn-hantu" id="kembali" href="/">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>
+          Kembali ke semua UDM
+        </a>
+        <a class="btn-hantu" id="tambah" href="/admin">+ Tambah rekod</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="utama">
+  <div class="memuat" id="memuat">Memuatkan…</div>
+  <div id="ralat" class="notis merah tersembunyi" role="alert"></div>
+  <div id="isi" class="tersembunyi" style="display:flex;flex-direction:column;gap:24px"></div>
+</main>
+</body>
+</html>
