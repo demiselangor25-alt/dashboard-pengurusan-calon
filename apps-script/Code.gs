@@ -38,7 +38,7 @@ var DUN_GROUP_COLS = [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12]; // lajur peringkat UD
 var DUN_DATA_ROW = 4;
 
 var JADUAL_HEADER = ['Tarikh', 'Hari', 'Masa', 'UDM', 'Daerah Mengundi', 'Lokaliti', 'Jenis Aktiviti',
-  'Nama Program', 'Sasaran Pengundi', 'Calon', 'PIC', 'Bil. Jentera', 'Status', 'Isu Dikenal Pasti',
+  'Nama Program', 'Sasaran', 'Calon', 'PIC', 'Bil. Jentera', 'Status', 'Isu Dikenal Pasti',
   'Tindakan Susulan'];
 var JC = { tarikh: 0, hari: 1, masa: 2, udm: 3, dm: 4, lokaliti: 5, jenis: 6, program: 7, sasaran: 8, calon: 9,
   pic: 10, jentera: 11, status: 12, isu: 13, tindakan: 14 };
@@ -506,6 +506,7 @@ function betulkanJadual_(ss, rasmi) {
   if (!ss.getSheetByName(backupNama)) {
     sh.copyTo(ss).setName(backupNama).hideSheet();
   }
+  sh.getRange(1, 1, sh.getMaxRows(), sh.getMaxColumns()).breakApart();
   sh.clear();
   sh.clearConditionalFormatRules();
   sh.getRange(1, 1, sh.getMaxRows(), sh.getMaxColumns()).clearDataValidations();
