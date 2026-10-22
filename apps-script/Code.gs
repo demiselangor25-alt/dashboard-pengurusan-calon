@@ -10,6 +10,10 @@
  *     UDM / Jadual / Tetapan). Dilindungi kunci API dalam Script Properties.
  */
 
+// ID Google Sheet "DATABASE PENGURUSAN CALON". Skrip boleh dipasang terus pada Sheet
+// (Extensions → Apps Script) atau sebagai projek Apps Script berasingan.
+var SHEET_ID = '1yh98K55yRin0w03jD8N2krh0sS_1XM6nDGNrAWxL2x4';
+
 var CFG = {
   DUN: {
     N15: { tab: 'N.15 Templer', nama: 'N.15 Taman Templer' },
@@ -368,17 +372,19 @@ function rekodDariJadual_(jadualRows, cap) {
 
 function persediaanAwal() {
   var props = PropertiesService.getScriptProperties();
-  var ui = SpreadsheetApp.getUi();
+  var ui = ui_();
   if (props.getProperty('PERSEDIAAN_SIAP')) {
-    ui.alert('Persediaan awal sudah dijalankan pada ' + props.getProperty('PERSEDIAAN_SIAP') + '. Tiada apa diubah.');
+    beritahu_('Persediaan awal sudah dijalankan pada ' + props.getProperty('PERSEDIAAN_SIAP') + '. Tiada apa diubah.');
     return;
   }
-  var jawapan = ui.alert('Persediaan awal',
-    'Skrip akan:\n• Buat salinan backup fail ini dalam Google Drive\n• Susun semula tab N.15 Templer & N.13 Kuang (satu baris setiap cawangan; tab asal disimpan & disembunyikan)\n• Betulkan tab Jadual Operasi (tajuk, tarikh, nama UDM, Status kosong merah)\n• Cipta tab Rekod Lapangan dan Tetapan\n\nTeruskan?',
-    ui.ButtonSet.YES_NO);
-  if (jawapan !== ui.Button.YES) return;
+  if (ui) {
+    var jawapan = ui.alert('Persediaan awal',
+      'Skrip akan:\n• Buat salinan backup fail ini dalam Google Drive\n• Susun semula tab N.15 Templer & N.13 Kuang (satu baris setiap cawangan; tab asal disimpan & disembunyikan)\n• Betulkan tab Jadual Operasi (tajuk, tarikh, nama UDM, Status kosong merah)\n• Cipta tab Rekod Lapangan dan Tetapan\n\nTeruskan?',
+      ui.ButtonSet.YES_NO);
+    if (jawapan !== ui.Button.YES) return;
+  }
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = ss_();
   var zon = ss.getSpreadsheetTimeZone();
   var cap = Utilities.formatDate(new Date(), zon, 'yyyy-MM-dd HH:mm');
 
@@ -402,12 +408,21 @@ function persediaanAwal() {
   sediakanTetapan_(ss);
 
   props.setProperty('PERSEDIAAN_SIAP', cap);
-  ui.alert('Selesai',
+  beritahu_('Selesai\n' +
     'Backup: ' + backup.getName() + '\n' +
     'UDM dikenal pasti: ' + rasmi.length + '\n' +
     'Baris Jadual Operasi: ' + jadual.rows.length + ' (perlu semakan nama UDM: ' + jadual.ragu.length + ', ditanda kuning)\n' +
-    'Rekod Lapangan awal: ' + bilRekod,
-    ui.ButtonSet.OK);
+    'Rekod Lapangan awal: ' + bilRekod);
+}
+
+function ui_() {
+  try { return SpreadsheetApp.getUi(); } catch (e) { return null; }
+}
+
+function beritahu_(mesej) {
+  Logger.log(mesej);
+  var ui = ui_();
+  if (ui) ui.alert(mesej);
 }
 
 function susunSemulaTabDun_(ss, key) {
@@ -592,9 +607,8 @@ function kunciApi_() {
 
 function paparKunci() {
   var k = kunciApi_();
-  SpreadsheetApp.getUi().alert('Kunci API',
-    'Salin kunci ini ke Netlify sebagai environment variable APPS_SCRIPT_KEY:\n\n' + k +
-    '\n\nJangan kongsi kunci ini di tempat awam.', SpreadsheetApp.getUi().ButtonSet.OK);
+  beritahu_('Salin kunci ini ke Netlify sebagai environment variable APPS_SCRIPT_KEY:\n\n' + k +
+    '\n\nJangan kongsi kunci ini di tempat awam.');
 }
 
 function semakData() {
@@ -602,14 +616,20 @@ function semakData() {
   Object.keys(CFG.DUN).forEach(function (k) { d[k] = bacaDun_(k).length + ' UDM'; });
   d.rekod = bacaRekod_(null).length + ' rekod';
   d.jadual = bacaJadual_().length + ' program';
-  SpreadsheetApp.getUi().alert(JSON.stringify(d, null, 2));
+  beritahu_(JSON.stringify(d, null, 2));
 }
 
 /* ------------------------------------------------------------------ */
 /* Baca data                                                           */
 /* ------------------------------------------------------------------ */
 
-function ss_() { return SpreadsheetApp.getActiveSpreadsheet(); }
+function ss_() {
+  try {
+    var aktif = SpreadsheetApp.getActiveSpreadsheet();
+    if (aktif && aktif.getId() === SHEET_ID) return aktif;
+  } catch (e) { /* skrip berasingan */ }
+  return SpreadsheetApp.openById(SHEET_ID);
+}
 
 function bacaDun_(key) {
   var cfg = CFG.DUN[key];
